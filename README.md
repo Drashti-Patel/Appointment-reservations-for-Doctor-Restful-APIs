@@ -1,1 +1,1 @@
-# Appointment-resservations-for-Doctor-Restful-APIs-
+# Appointment-reservations-for-Doctor-Restful-APIs
