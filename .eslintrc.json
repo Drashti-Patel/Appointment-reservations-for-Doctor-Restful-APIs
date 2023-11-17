@@ -1,0 +1,26 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "@typescript-eslint"
+  ],
+  "extends": [
+    "eslint:recommended",
+    "airbnb-base",
+    "airbnb-typescript/base"
+  ],
+  "rules": { 
+    "no-console": 0,
+    "no-underscore-dangle": 0,
+    "no-unused-vars": 0,
+    "no-use-before-define": ["error", { "variables": false }],
+    "no-multi-str": 0,
+    "no-param-reassign": "off",
+    "key-spacing": ["error", { "beforeColon": true , "afterColon": true }],
+    "class-methods-use-this": ["error", { "enforceForClassFields": false }]
+
+  },
+  "parserOptions": {
+    "project": ["./tsconfig.json"]
+  }
+}
