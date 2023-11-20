@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import validRoutes from './validRouter';
 import appointmentRoutes from './appointmentRouter';
+import updateAppointmentRoutes from './updateAppointmentRouter';
 
 const router = Router();
 
@@ -18,6 +19,6 @@ router.use('/valid', validRoutes);
  * ALL v1/appointment
  */
 router.use('/appointment', appointmentRoutes);
-router.use('/updateAppointment', appointmentRoutes);
+router.use('/updateAppointment', updateAppointmentRoutes);
 
 export default router;
