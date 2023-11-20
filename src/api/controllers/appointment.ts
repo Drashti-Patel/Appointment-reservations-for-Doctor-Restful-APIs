@@ -25,6 +25,27 @@ const addAppointment = async (req: Request, res: Response, next: NextFunction) =
   }
 };
 
+const updateAppointment = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      const message = errors
+        .array()
+        .map((error) => error.msg)
+        .join(' | ');
+      throw ApiError.badRequest(message);
+    }
+    const appointmentId = req.params.appointmentId as string;
+    const data = req.body as AppointmentRequestBody;
+    const response = await appointmentCollection.updateAppointment(appointmentId, data);
+    const message = 'your appointment has updated successfully';
+    res.status(201).send({ message });
+  } catch (e) {
+    next(e);
+  }
+};
+
 export default {
   addAppointment,
+  updateAppointment,
 };
