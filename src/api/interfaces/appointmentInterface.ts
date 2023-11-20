@@ -11,3 +11,12 @@ export interface AppointmentRequestBody {
   appointmentDateTime: string;
   status: AppointmentStatus;
 }
+
+export interface UpdateAppointmentRequestBody {
+  appointmentId: string;
+  patientFirstName: string;
+  patientLastName: string;
+  contactNumber: string;
+  appointmentDateTime: string;
+  status: AppointmentStatus;
+}

@@ -18,5 +18,6 @@ router.use('/valid', validRoutes);
  * ALL v1/appointment
  */
 router.use('/appointment', appointmentRoutes);
+router.use('/updateAppointment', appointmentRoutes);
 
 export default router;
