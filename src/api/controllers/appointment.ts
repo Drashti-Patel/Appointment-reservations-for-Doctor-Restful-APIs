@@ -45,7 +45,30 @@ const updateAppointment = async (req: Request, res: Response, next: NextFunction
   }
 };
 
+const getAllAppointments = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      const message = errors
+        .array()
+        .map((error) => error.msg)
+        .join(' | ');
+      throw ApiError.badRequest(message);
+    }
+
+    const appointmentList = await appointmentCollection.fetchAllAppointments();
+    const response = {
+      count: appointmentList.length,
+      appointments: appointmentList,
+    };
+    res.status(200).send(response);
+  } catch (e) {
+    next(e);
+  }
+};
+
 export default {
   addAppointment,
   updateAppointment,
+  getAllAppointments,
 };
