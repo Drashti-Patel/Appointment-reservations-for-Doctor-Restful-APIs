@@ -3,7 +3,7 @@ import { validationResult } from 'express-validator';
 import { v4 as uuidv4 } from 'uuid';
 import appointmentCollection from '../model/appointments';
 import ApiError from '../errors/apiError';
-import { AppointmentRequestBody } from '../interfaces/appointmentInterface';
+import { AppointmentRequestBody, AppointmentIdsRequestBody } from '../interfaces/appointmentInterface';
 
 const addAppointment = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -45,6 +45,25 @@ const updateAppointment = async (req: Request, res: Response, next: NextFunction
   }
 };
 
+const deleteAppointments = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      const message = errors
+        .array()
+        .map((error) => error.msg)
+        .join(' | ');
+      throw ApiError.badRequest(message);
+    }
+    const data = req.body as AppointmentIdsRequestBody;
+    const response = await appointmentCollection.deleteAppointment(data);
+    const message = 'your appointment has removed successfully';
+    res.status(201).send({ message });
+  } catch (e) {
+    next(e);
+  }
+};
+
 const getAllAppointments = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const errors = validationResult(req);
@@ -55,8 +74,29 @@ const getAllAppointments = async (req: Request, res: Response, next: NextFunctio
         .join(' | ');
       throw ApiError.badRequest(message);
     }
-
     const appointmentList = await appointmentCollection.fetchAllAppointments();
+    const response = {
+      count: appointmentList.length,
+      appointments: appointmentList,
+    };
+    res.status(200).send(response);
+  } catch (e) {
+    next(e);
+  }
+};
+
+const getAppointmentsByName = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      const message = errors
+        .array()
+        .map((error) => error.msg)
+        .join(' | ');
+      throw ApiError.badRequest(message);
+    }
+    const customerName = req.params.customerName as string;
+    const appointmentList = await appointmentCollection.fetchAppointmentsByName(customerName);
     const response = {
       count: appointmentList.length,
       appointments: appointmentList,
@@ -70,5 +110,7 @@ const getAllAppointments = async (req: Request, res: Response, next: NextFunctio
 export default {
   addAppointment,
   updateAppointment,
+  deleteAppointments,
   getAllAppointments,
+  getAppointmentsByName,
 };

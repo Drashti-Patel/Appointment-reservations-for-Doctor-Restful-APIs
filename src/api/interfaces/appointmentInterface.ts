@@ -11,3 +11,7 @@ export interface AppointmentRequestBody {
   appointmentDateTime: string;
   status: AppointmentStatus;
 }
+
+export interface AppointmentIdsRequestBody {
+  appointmentIds: string[];
+}
