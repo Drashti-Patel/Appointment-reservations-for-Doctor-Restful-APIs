@@ -6,6 +6,12 @@ const appointmentCollection = firebaseAdmin.firestore().collection('reservations
 const addAppointment = async (appointmentId: string, data: AppointmentRequestBody) =>
   await appointmentCollection.doc(appointmentId).set(data);
 
+const fetchAllAppointments = async () => {
+  const appointmentList = await appointmentCollection.get();
+  const result = appointmentList.docs.map((item) => item.data());
+  return result;
+};
+
 const updateAppointment = async (appointmentId: string, data: AppointmentRequestBody) => {
   const appointmentRef = appointmentCollection.doc(appointmentId);
 
@@ -20,4 +26,4 @@ const updateAppointment = async (appointmentId: string, data: AppointmentRequest
   }
 };
 
-export default { addAppointment, updateAppointment };
+export default { addAppointment, updateAppointment, fetchAllAppointments };

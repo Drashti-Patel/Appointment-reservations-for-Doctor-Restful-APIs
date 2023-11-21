@@ -3,6 +3,11 @@ import appointmentController from '../../controllers/appointment';
 const router = Router();
 
 /**
+ * GET v1/appointment
+ */
+router.get('', appointmentController.getAllAppointments);
+
+/**
  * POST v1/appointment
  */
 router.post('', appointmentController.addAppointment);
