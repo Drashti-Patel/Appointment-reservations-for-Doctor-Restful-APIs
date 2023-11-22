@@ -1,0 +1,138 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Doctor Appointment APIs",
+    "version": "1.0.0",
+    "description": "CRUD operations to reserve appointment at a doctor's clinic\n\nSome useful links:\n- [The Doctor Appointment repository](https://github.com/Drashti-Patel/Appointment-reservations-for-Doctor-Restful-APIs)"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/v1/"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Appointment",
+      "description": "CRUDs about managing appointment"
+    }
+  ],
+  "paths": {
+    "/appointment": {
+      "get": {
+        "tags": [
+          "Appointment"
+        ],
+        "summary": "Retrieves list of all appointments",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AppointmentList"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid status value"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Appointment"
+        ],
+        "summary": "Add a new appointment to the clinic",
+        "requestBody": {
+          "description": "Create a new pet in the store",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Appointment"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Returns unique appointment id in response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AppointmentPostResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Appointment": {
+        "type": "object",
+        "properties": {
+          "patientFirstName": {
+            "type": "string"
+          },
+          "patientLastName": {
+            "type": "string"
+          },
+          "contactNumber": {
+            "type": "string"
+          },
+          "appointmentDateTime": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "SCHEDULED",
+              "CANCELLED",
+              "ATTENDED"
+            ]
+          }
+        },
+        "required": [
+          "patientFirstName",
+          "patientLastName",
+          "contactNumber",
+          "appointmentDateTime",
+          "status"
+        ]
+      },
+      "AppointmentList": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "integer"
+          },
+          "appointments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Appointment"
+            }
+          }
+        },
+        "required": [
+          "count",
+          "appointments"
+        ]
+      },
+      "AppointmentPostResponse": {
+        "type": "object",
+        "properties": {
+          "appointmentId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "appointmentId"
+        ]
+      }
+    }
+  }
+}
