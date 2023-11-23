@@ -1,5 +1,5 @@
 import firebaseAdmin from '../../config/firebaseConfig';
-import { AppointmentRequestBody } from '../interfaces/appointmentInterface';
+import { AppointmentRequestBody, AppointmentIdsRequestBody } from '../interfaces/appointmentInterface';
 
 const appointmentCollection = firebaseAdmin.firestore().collection('reservations');
 
@@ -8,6 +8,12 @@ const addAppointment = async (appointmentId: string, data: AppointmentRequestBod
 
 const fetchAllAppointments = async () => {
   const appointmentList = await appointmentCollection.get();
+  const result = appointmentList.docs.map((item) => item.data());
+  return result;
+};
+
+const fetchAppointmentsByName = async (customerName: string) => {
+  const appointmentList = await appointmentCollection.where('patientFirstName', '==', customerName).get();
   const result = appointmentList.docs.map((item) => item.data());
   return result;
 };
@@ -26,4 +32,20 @@ const updateAppointment = async (appointmentId: string, data: AppointmentRequest
   }
 };
 
-export default { addAppointment, updateAppointment, fetchAllAppointments };
+const deleteAppointment = async (data: AppointmentIdsRequestBody) => {
+  try {
+    // Update the document with the provided data
+    await Promise.all(data.appointmentIds.map(async (appointmentId) => {
+      const appointmentRef = appointmentCollection.doc(appointmentId);
+      console.log(appointmentId);
+
+      await appointmentRef.delete();
+    }));
+    console.log('Delete successful');
+  } catch (error) {
+    console.error('Error updating data:', error);
+    // Handle the error as needed
+  }
+};
+
+export default { addAppointment, updateAppointment, deleteAppointment, fetchAllAppointments, fetchAppointmentsByName };
