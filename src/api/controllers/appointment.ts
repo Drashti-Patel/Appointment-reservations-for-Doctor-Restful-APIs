@@ -39,7 +39,7 @@ const updateAppointment = async (req: Request, res: Response, next: NextFunction
     const data = req.body as AppointmentRequestBody;
     const response = await appointmentCollection.updateAppointment(appointmentId, data);
     const message = 'your appointment has updated successfully';
-    res.status(201).send({ message });
+    res.status(200).send({ message });
   } catch (e) {
     next(e);
   }
@@ -114,8 +114,34 @@ const getAppointmentsByName = async (req: Request, res: Response, next: NextFunc
         .join(' | ');
       throw ApiError.badRequest(message);
     }
+
     const customerName = req.params.customerName as string;
     const appointmentList = await appointmentCollection.fetchAppointmentsByName(customerName);
+
+    const response = {
+      count: appointmentList.length,
+      appointments: appointmentList,
+    };
+    res.status(200).send(response);
+  } catch (e) {
+    next(e);
+  }
+};
+
+const findAppointmentByServiceName = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      const message = errors
+        .array()
+        .map((error) => error.msg)
+        .join(' | ');
+      throw ApiError.badRequest(message);
+    }
+
+    const serviceName = req.query.serviceName as string;
+    const appointmentList = await appointmentCollection.fetchAppointmentsByServiceName(serviceName);
+
     const response = {
       count: appointmentList.length,
       appointments: appointmentList,
@@ -133,4 +159,5 @@ export default {
   deleteAppointments,
   getAllAppointments,
   getAppointmentsByName,
+  findAppointmentByServiceName,
 };

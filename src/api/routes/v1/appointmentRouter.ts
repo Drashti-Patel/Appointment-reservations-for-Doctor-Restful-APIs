@@ -9,6 +9,11 @@ const router = Router();
 router.get('', appointmentController.getAllAppointments);
 
 /**
+ * GET v1/appointment/findByService?service
+ */
+router.get('/findByService', appointmentController.findAppointmentByServiceName);
+
+/**
  * POST v1/appointment
  */
 router.post('', appointmentController.addAppointment);

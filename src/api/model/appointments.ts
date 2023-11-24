@@ -18,6 +18,12 @@ const fetchAppointmentsByName = async (customerName: string) => {
   return result;
 };
 
+const fetchAppointmentsByServiceName = async (serviceName: string) => {
+  const appointmentList = await appointmentCollection.where('serviceName', '==', serviceName).get();
+  const result = appointmentList.docs.map((item) => item.data());
+  return result;
+};
+
 const updateAppointment = async (appointmentId: string, data: AppointmentRequestBody) => {
   const appointmentRef = appointmentCollection.doc(appointmentId);
 
@@ -47,11 +53,13 @@ const deleteAppointment = async (appointmentId: string) => {
 
 const deleteAppointments = async (data: AppointmentIdsRequestBody) => {
   try {
-    // Update the document with the provided data
-    await Promise.all(data.appointmentIds.map(async (appointmentId) => {
-      const appointmentRef = appointmentCollection.doc(appointmentId);
-      await appointmentRef.delete();
-    }));
+    // Delete the document with the provided data
+    await Promise.all(
+      data.appointmentIds.map(async (appointmentId) => {
+        const appointmentRef = appointmentCollection.doc(appointmentId);
+        await appointmentRef.delete();
+      }),
+    );
     console.log('Delete successful');
   } catch (error) {
     console.error('Error updating data:', error);
@@ -59,4 +67,12 @@ const deleteAppointments = async (data: AppointmentIdsRequestBody) => {
   }
 };
 
-export default { addAppointment, updateAppointment, deleteAppointment, deleteAppointments, fetchAllAppointments, fetchAppointmentsByName };
+export default {
+  addAppointment,
+  updateAppointment,
+  deleteAppointment,
+  deleteAppointments,
+  fetchAllAppointments,
+  fetchAppointmentsByServiceName,
+  fetchAppointmentsByName,
+};
