@@ -36,7 +36,7 @@ const deleteAppointment = async (appointmentId: string) => {
   const appointmentRef = appointmentCollection.doc(appointmentId);
 
   try {
-    // Update the document with the provided data
+    // Delete the document with the provided data
     await appointmentRef.delete();
     console.log('Delete successful');
   } catch (error) {

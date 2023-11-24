@@ -58,7 +58,7 @@ const deleteAppointment = async (req: Request, res: Response, next: NextFunction
     const appointmentId = req.params.appointmentId as string;
     const response = await appointmentCollection.deleteAppointment(appointmentId);
     const message = 'your appointment has deleted successfully';
-    res.status(201).send({ message });
+    res.status(200).send({ message });
   } catch (e) {
     next(e);
   }
@@ -77,7 +77,7 @@ const deleteAppointments = async (req: Request, res: Response, next: NextFunctio
     const data = req.body as AppointmentIdsRequestBody;
     const response = await appointmentCollection.deleteAppointments(data);
     const message = 'your appointment has removed successfully';
-    res.status(201).send({ message });
+    res.status(200).send({ message });
   } catch (e) {
     next(e);
   }

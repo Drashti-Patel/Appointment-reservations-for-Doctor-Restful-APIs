@@ -98,7 +98,7 @@
           "required": true
         },
         "responses": {
-          "201": {
+          "200": {
             "description": "Returns a successful appointment update message in response",
             "content": {
               "application/json": {
@@ -129,7 +129,7 @@
           }
         ],
         "responses": {
-          "201": {
+          "200": {
             "description": "Returns a successful appointment delete message in response",
             "content": {
               "application/json": {
@@ -160,7 +160,7 @@
           "required": true
         },
         "responses": {
-          "201": {
+          "200": {
             "description": "Returns a successful appointment delete message in response",
             "content": {
               "application/json": {
@@ -191,7 +191,7 @@
           }
         ],
         "responses": {
-          "201": {
+          "200": {
             "description": "Retrieves list of all appointments by customer name",
             "content": {
               "application/json": {
