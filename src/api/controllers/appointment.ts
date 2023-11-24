@@ -45,6 +45,25 @@ const updateAppointment = async (req: Request, res: Response, next: NextFunction
   }
 };
 
+const deleteAppointment = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      const message = errors
+        .array()
+        .map((error) => error.msg)
+        .join(' | ');
+      throw ApiError.badRequest(message);
+    }
+    const appointmentId = req.params.appointmentId as string;
+    const response = await appointmentCollection.deleteAppointment(appointmentId);
+    const message = 'your appointment has deleted successfully';
+    res.status(201).send({ message });
+  } catch (e) {
+    next(e);
+  }
+};
+
 const deleteAppointments = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const errors = validationResult(req);
@@ -56,7 +75,7 @@ const deleteAppointments = async (req: Request, res: Response, next: NextFunctio
       throw ApiError.badRequest(message);
     }
     const data = req.body as AppointmentIdsRequestBody;
-    const response = await appointmentCollection.deleteAppointment(data);
+    const response = await appointmentCollection.deleteAppointments(data);
     const message = 'your appointment has removed successfully';
     res.status(201).send({ message });
   } catch (e) {
@@ -110,6 +129,7 @@ const getAppointmentsByName = async (req: Request, res: Response, next: NextFunc
 export default {
   addAppointment,
   updateAppointment,
+  deleteAppointment,
   deleteAppointments,
   getAllAppointments,
   getAppointmentsByName,

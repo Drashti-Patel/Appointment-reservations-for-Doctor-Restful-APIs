@@ -45,7 +45,7 @@
         ],
         "summary": "Add a new appointment to the clinic",
         "requestBody": {
-          "description": "Create a new pet in the store",
+          "description": "Create a new appointment to the clinic",
           "content": {
             "application/json": {
               "schema": {
@@ -62,6 +62,141 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/AppointmentPostResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/appointment/update/{appointmentId}": {
+      "put": {
+        "tags": [
+          "Appointment"
+        ],
+        "summary": "Update an existing appointment in the clinic",
+        "parameters": [
+          {
+            "name": "appointmentId",
+            "in": "path",
+            "required": true,
+            "description": "The ID of the appointment to update",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Update an existing appointment in the clinic",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Appointment"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Returns a successful appointment update message in response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AppointmentPutResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/appointment/delete/{appointmentId}": {
+      "delete": {
+        "tags": [
+          "Appointment"
+        ],
+        "summary": "Cancel reserved appointment in the clinic",
+        "parameters": [
+          {
+            "name": "appointmentId",
+            "in": "path",
+            "required": true,
+            "description": "The ID of the appointment to delete",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Returns a successful appointment delete message in response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AppointmentDeleteResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/appointment/deleteAppointments": {
+      "post": {
+        "tags": [
+          "Appointment"
+        ],
+        "summary": "Cancel multiple reserved appointment in the clinic",
+        "requestBody": {
+          "description": "Delete an existing appointment in the clinic",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AppointmentIdList"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Returns a successful appointment delete message in response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AppointmentDeleteResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/appointment/search/{customerName}": {
+      "get": {
+        "tags": [
+          "Appointment"
+        ],
+        "summary": "Search reserved appointment by customer name",
+        "parameters": [
+          {
+            "name": "customerName",
+            "in": "path",
+            "required": true,
+            "description": "The customer name of the appointment to search",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Retrieves list of all appointments by customer name",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AppointmentList"
                 }
               }
             }
@@ -122,6 +257,23 @@
           "appointments"
         ]
       },
+      "AppointmentIdList": {
+        "type": "object",
+        "properties": {
+          "appointmentIds": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AppointmentId"
+            }
+          }
+        },
+        "required": [
+          "appointmentIds"
+        ]
+      },
+      "AppointmentId": {
+        "type": "string"
+      },
       "AppointmentPostResponse": {
         "type": "object",
         "properties": {
@@ -132,6 +284,22 @@
         "required": [
           "appointmentId"
         ]
+      },
+      "AppointmentPutResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "AppointmentDeleteResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        }
       }
     }
   }
