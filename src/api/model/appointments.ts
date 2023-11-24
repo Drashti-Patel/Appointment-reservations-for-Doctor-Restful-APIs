@@ -32,13 +32,24 @@ const updateAppointment = async (appointmentId: string, data: AppointmentRequest
   }
 };
 
-const deleteAppointment = async (data: AppointmentIdsRequestBody) => {
+const deleteAppointment = async (appointmentId: string) => {
+  const appointmentRef = appointmentCollection.doc(appointmentId);
+
+  try {
+    // Delete the document with the provided data
+    await appointmentRef.delete();
+    console.log('Delete successful');
+  } catch (error) {
+    console.error('Error updating data:', error);
+    // Handle the error as needed
+  }
+};
+
+const deleteAppointments = async (data: AppointmentIdsRequestBody) => {
   try {
     // Update the document with the provided data
     await Promise.all(data.appointmentIds.map(async (appointmentId) => {
       const appointmentRef = appointmentCollection.doc(appointmentId);
-      console.log(appointmentId);
-
       await appointmentRef.delete();
     }));
     console.log('Delete successful');
@@ -48,4 +59,4 @@ const deleteAppointment = async (data: AppointmentIdsRequestBody) => {
   }
 };
 
-export default { addAppointment, updateAppointment, deleteAppointment, fetchAllAppointments, fetchAppointmentsByName };
+export default { addAppointment, updateAppointment, deleteAppointment, deleteAppointments, fetchAllAppointments, fetchAppointmentsByName };

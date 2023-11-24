@@ -21,7 +21,12 @@ router.put('/update/:appointmentId', appointmentController.updateAppointment);
 /**
  * DELETE v1/appointment/delete/:appointmentId
  */
-router.delete('/delete', appointmentController.deleteAppointments);
+router.delete('/delete/:appointmentId', appointmentController.deleteAppointment);
+
+/**
+ * POST v1/appointment/deleteAppointments
+ */
+router.post('/deleteAppointments', appointmentController.deleteAppointments);
 
 /**
  * GET v1/appointment/search/:customerName
