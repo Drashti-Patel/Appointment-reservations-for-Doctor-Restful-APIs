@@ -1,306 +1,360 @@
 {
-  "openapi": "3.0.3",
-  "info": {
-    "title": "Doctor Appointment APIs",
-    "version": "1.0.0",
-    "description": "CRUD operations to reserve appointment at a doctor's clinic\n\nSome useful links:\n- [The Doctor Appointment repository](https://github.com/Drashti-Patel/Appointment-reservations-for-Doctor-Restful-APIs)"
+  "openapi":"3.0.3",
+  "info":{
+     "title":"Doctor Appointment APIs",
+     "version":"1.0.0",
+     "description":"CRUD operations to reserve appointment at a doctor's clinic\n\nSome useful links:\n- [The Doctor Appointment repository](https://github.com/Drashti-Patel/Appointment-reservations-for-Doctor-Restful-APIs)"
   },
-  "servers": [
-    {
-      "url": "http://localhost:3000/v1/"
-    }
+  "servers":[
+     {
+        "url":"http://localhost:3000/v1/"
+     }
   ],
-  "tags": [
-    {
-      "name": "Appointment",
-      "description": "CRUDs about managing appointment"
-    }
+  "tags":[
+     {
+        "name":"Appointment",
+        "description":"CRUDs about managing appointment"
+     }
   ],
-  "paths": {
-    "/appointment": {
-      "get": {
-        "tags": [
-          "Appointment"
-        ],
-        "summary": "Retrieves list of all appointments",
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AppointmentList"
-                }
+  "paths":{
+     "/appointment":{
+        "get":{
+           "tags":[
+              "Appointment"
+           ],
+           "summary":"Retrieves list of all appointments",
+           "responses":{
+              "200":{
+                 "description":"successful operation",
+                 "content":{
+                    "application/json":{
+                       "schema":{
+                          "$ref":"#/components/schemas/AppointmentList"
+                       }
+                    }
+                 }
+              },
+              "400":{
+                 "description":"Invalid status value"
               }
-            }
-          },
-          "400": {
-            "description": "Invalid status value"
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "Appointment"
-        ],
-        "summary": "Add a new appointment to the clinic",
-        "requestBody": {
-          "description": "Create a new appointment to the clinic",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Appointment"
-              }
-            }
-          },
-          "required": true
+           }
         },
-        "responses": {
-          "201": {
-            "description": "Returns unique appointment id in response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AppointmentPostResponse"
-                }
+        "post":{
+           "tags":[
+              "Appointment"
+           ],
+           "summary":"Add a new appointment to the clinic",
+           "requestBody":{
+              "description":"Create a new appointment to the clinic",
+              "content":{
+                 "application/json":{
+                    "schema":{
+                       "$ref":"#/components/schemas/Appointment"
+                    }
+                 }
+              },
+              "required":true
+           },
+           "responses":{
+              "200":{
+                 "description":"Returns unique appointment id in response",
+                 "content":{
+                    "application/json":{
+                       "schema":{
+                          "$ref":"#/components/schemas/AppointmentPostResponse"
+                       }
+                    }
+                 }
               }
-            }
-          }
+           }
         }
-      }
-    },
-    "/appointment/update/{appointmentId}": {
-      "put": {
-        "tags": [
-          "Appointment"
-        ],
-        "summary": "Update an existing appointment in the clinic",
-        "parameters": [
-          {
-            "name": "appointmentId",
-            "in": "path",
-            "required": true,
-            "description": "The ID of the appointment to update",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "Update an existing appointment in the clinic",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Appointment"
+     },
+     "/appointment/update/{appointmentId}":{
+        "put":{
+           "tags":[
+              "Appointment"
+           ],
+           "summary":"Update an existing appointment in the clinic",
+           "parameters":[
+              {
+                 "name":"appointmentId",
+                 "in":"path",
+                 "required":true,
+                 "description":"The ID of the appointment to update",
+                 "schema":{
+                    "type":"string"
+                 }
               }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "Returns a successful appointment update message in response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AppointmentPutResponse"
-                }
+           ],
+           "requestBody":{
+              "description":"Update an existing appointment in the clinic",
+              "content":{
+                 "application/json":{
+                    "schema":{
+                       "$ref":"#/components/schemas/Appointment"
+                    }
+                 }
+              },
+              "required":true
+           },
+           "responses":{
+              "200":{
+                 "description":"Returns a successful appointment update message in response",
+                 "content":{
+                    "application/json":{
+                       "schema":{
+                          "$ref":"#/components/schemas/AppointmentPutResponse"
+                       }
+                    }
+                 }
               }
-            }
-          }
+           }
         }
-      }
-    },
-    "/appointment/delete/{appointmentId}": {
-      "delete": {
-        "tags": [
-          "Appointment"
-        ],
-        "summary": "Cancel reserved appointment in the clinic",
-        "parameters": [
-          {
-            "name": "appointmentId",
-            "in": "path",
-            "required": true,
-            "description": "The ID of the appointment to delete",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Returns a successful appointment delete message in response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AppointmentDeleteResponse"
-                }
+     },
+     "/appointment/delete/{appointmentId}":{
+        "delete":{
+           "tags":[
+              "Appointment"
+           ],
+           "summary":"Cancel reserved appointment in the clinic",
+           "parameters":[
+              {
+                 "name":"appointmentId",
+                 "in":"path",
+                 "required":true,
+                 "description":"The ID of the appointment to delete",
+                 "schema":{
+                    "type":"string"
+                 }
               }
-            }
-          }
+           ],
+           "responses":{
+              "200":{
+                 "description":"Returns a successful appointment delete message in response",
+                 "content":{
+                    "application/json":{
+                       "schema":{
+                          "$ref":"#/components/schemas/AppointmentDeleteResponse"
+                       }
+                    }
+                 }
+              }
+           }
         }
-      }
-    },
-    "/appointment/deleteAppointments": {
-      "post": {
-        "tags": [
-          "Appointment"
-        ],
-        "summary": "Cancel multiple reserved appointment in the clinic",
-        "requestBody": {
-          "description": "Delete an existing appointment in the clinic",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AppointmentIdList"
+     },
+     "/appointment/deleteAppointments":{
+        "post":{
+           "tags":[
+              "Appointment"
+           ],
+           "summary":"Cancel multiple reserved appointment in the clinic",
+           "requestBody":{
+              "description":"Delete existing appointments in the clinic",
+              "content":{
+                 "application/json":{
+                    "schema":{
+                       "$ref":"#/components/schemas/AppointmentIdList"
+                    }
+                 }
+              },
+              "required":true
+           },
+           "responses":{
+              "200":{
+                 "description":"Returns a successful appointment delete message in response",
+                 "content":{
+                    "application/json":{
+                       "schema":{
+                          "$ref":"#/components/schemas/AppointmentDeleteResponse"
+                       }
+                    }
+                 }
               }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "Returns a successful appointment delete message in response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AppointmentDeleteResponse"
-                }
-              }
-            }
-          }
+           }
         }
-      }
-    },
-    "/appointment/search/{customerName}": {
-      "get": {
-        "tags": [
-          "Appointment"
-        ],
-        "summary": "Search reserved appointment by customer name",
-        "parameters": [
-          {
-            "name": "customerName",
-            "in": "path",
-            "required": true,
-            "description": "The customer name of the appointment to search",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Retrieves list of all appointments by customer name",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AppointmentList"
-                }
+     },
+     "/appointment/search/{customerName}":{
+        "get":{
+           "tags":[
+              "Appointment"
+           ],
+           "summary":"Search reserved appointment by customer name",
+           "parameters":[
+              {
+                 "name":"customerName",
+                 "in":"path",
+                 "required":true,
+                 "description":"The customer name of the appointment to search",
+                 "schema":{
+                    "type":"string"
+                 }
               }
-            }
-          }
+           ],
+           "responses":{
+              "200":{
+                 "description":"Retrieves list of all appointments by customer name",
+                 "content":{
+                    "application/json":{
+                       "schema":{
+                          "$ref":"#/components/schemas/AppointmentList"
+                       }
+                    }
+                 }
+              }
+           }
         }
-      }
-    }
+     },
+     "/appointment/findByService":{
+        "get":{
+           "tags":[
+              "Appointment"
+           ],
+           "summary":"Finds appointments by service",
+           "parameters":[
+              {
+                 "name":"serviceName",
+                 "in":"query",
+                 "description":"service name values that need to be considered for filter",
+                 "required":true,
+                 "explode":true,
+                 "schema":{
+                    "type":"string",
+                    "default":"DENTAL",
+                    "enum":[
+                       "DENTAL",
+                       "CARDIO",
+                       "PEDIATRICS"
+                    ]
+                 }
+              }
+           ],
+           "responses":{
+              "200":{
+                 "description":"Retrieves list of all appointments by service name",
+                 "content":{
+                    "application/json":{
+                       "schema":{
+                          "$ref":"#/components/schemas/AppointmentList"
+                       }
+                    }
+                 }
+              }
+           }
+        }
+     }
   },
-  "components": {
-    "schemas": {
-      "Appointment": {
-        "type": "object",
-        "properties": {
-          "patientFirstName": {
-            "type": "string"
-          },
-          "patientLastName": {
-            "type": "string"
-          },
-          "contactNumber": {
-            "type": "string"
-          },
-          "appointmentDateTime": {
-            "type": "string"
-          },
-          "status": {
-            "type": "string",
-            "enum": [
-              "SCHEDULED",
-              "CANCELLED",
-              "ATTENDED"
-            ]
-          }
+  "components":{
+     "schemas":{
+        "Appointment":{
+           "type":"object",
+           "properties":{
+              "patientFirstName":{
+                 "type":"string"
+              },
+              "patientLastName":{
+                 "type":"string"
+              },
+              "contactNumber":{
+                 "type":"string"
+              },
+              "appointmentDateTime":{
+                 "type":"string"
+              },
+              "status":{
+                 "type":"string",
+                 "enum":[
+                    "SCHEDULED",
+                    "CANCELLED",
+                    "ATTENDED"
+                 ]
+              },
+              "serviceName":{
+                 "type":"string",
+                 "enum":[
+                    "DENTAL",
+                    "CARDIO",
+                    "PEDIATRICS"
+                 ]
+              }
+           },
+           "required":[
+              "patientFirstName",
+              "patientLastName",
+              "contactNumber",
+              "appointmentDateTime",
+              "status",
+              "serviceName"
+           ]
         },
-        "required": [
-          "patientFirstName",
-          "patientLastName",
-          "contactNumber",
-          "appointmentDateTime",
-          "status"
-        ]
-      },
-      "AppointmentList": {
-        "type": "object",
-        "properties": {
-          "count": {
-            "type": "integer"
-          },
-          "appointments": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Appointment"
-            }
-          }
+        "AppointmentList":{
+           "type":"object",
+           "properties":{
+              "count":{
+                 "type":"integer"
+              },
+              "appointments":{
+                 "type":"array",
+                 "items":{
+                    "$ref":"#/components/schemas/Appointment"
+                 }
+              }
+           },
+           "required":[
+              "count",
+              "appointments"
+           ]
         },
-        "required": [
-          "count",
-          "appointments"
-        ]
-      },
-      "AppointmentIdList": {
-        "type": "object",
-        "properties": {
-          "appointmentIds": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/AppointmentId"
-            }
-          }
+        "AppointmentIdList":{
+           "type":"object",
+           "properties":{
+              "appointmentIds":{
+                 "type":"array",
+                 "items":{
+                    "$ref":"#/components/schemas/AppointmentId"
+                 },
+                 "example":[
+                    "4b7a8a35-9605-4865-bacf-f0e3046dc623",
+                    "169ecc68-3f44-4ac5-85d3-d95be597d4eb",
+                    "916d7d3c-762c-4cc5-b2d4-a0c3dd42d5f3"
+                 ]
+              }
+           },
+           "required":[
+              "appointmentIds"
+           ]
         },
-        "required": [
-          "appointmentIds"
-        ]
-      },
-      "AppointmentId": {
-        "type": "string"
-      },
-      "AppointmentPostResponse": {
-        "type": "object",
-        "properties": {
-          "appointmentId": {
-            "type": "string"
-          }
+        "AppointmentId":{
+           "type":"string"
         },
-        "required": [
-          "appointmentId"
-        ]
-      },
-      "AppointmentPutResponse": {
-        "type": "object",
-        "properties": {
-          "message": {
-            "type": "string"
-          }
+        "AppointmentPostResponse":{
+           "type":"object",
+           "properties":{
+              "appointmentId":{
+                 "type":"string"
+              }
+           },
+           "required":[
+              "appointmentId"
+           ]
+        },
+        "AppointmentPutResponse":{
+           "type":"object",
+           "properties":{
+              "message":{
+                 "type":"string",
+                 "example":"your appointment has updated successfully"
+              }
+           }
+        },
+        "AppointmentDeleteResponse":{
+           "type":"object",
+           "properties":{
+              "message":{
+                 "type":"string",
+                 "example":"your appointment has deleted successfully"
+              }
+           }
         }
-      },
-      "AppointmentDeleteResponse": {
-        "type": "object",
-        "properties": {
-          "message": {
-            "type": "string"
-          }
-        }
-      }
-    }
+     }
   }
 }
