@@ -1,30 +1,49 @@
 import firebaseAdmin from '../../config/firebaseConfig';
-import { AppointmentRequestBody, AppointmentIdsRequestBody } from '../interfaces/appointmentInterface';
+import * as admin from 'firebase-admin';
+import { AppointmentIdsRequestBody, AppointmentDbModel } from '../interfaces/appointmentInterface';
 
 const appointmentCollection = firebaseAdmin.firestore().collection('reservations');
 
-const addAppointment = async (appointmentId: string, data: AppointmentRequestBody) =>
+const addAppointment = async (appointmentId: string, data: AppointmentDbModel) => {
   await appointmentCollection.doc(appointmentId).set(data);
-
+};
 const fetchAllAppointments = async () => {
   const appointmentList = await appointmentCollection.get();
-  const result = appointmentList.docs.map((item) => item.data());
+  const result = appointmentList.docs.map((item) => {
+    const { timeStamp, ...appointmentData } = item.data();
+    return appointmentData;
+  });
   return result;
 };
 
 const fetchAppointmentsByName = async (customerName: string) => {
   const appointmentList = await appointmentCollection.where('patientFirstName', '==', customerName).get();
-  const result = appointmentList.docs.map((item) => item.data());
+  const result = appointmentList.docs.map((item) => {
+    const { timeStamp, ...appointmentData } = item.data();
+    return appointmentData;
+  });
   return result;
 };
 
 const fetchAppointmentsByServiceName = async (serviceName: string) => {
   const appointmentList = await appointmentCollection.where('serviceName', '==', serviceName).get();
-  const result = appointmentList.docs.map((item) => item.data());
+  const result = appointmentList.docs.map((item) => {
+    const { timeStamp, ...appointmentData } = item.data();
+    return appointmentData;
+  });
   return result;
 };
 
-const updateAppointment = async (appointmentId: string, data: AppointmentRequestBody) => {
+const fetchAppointmentsByStartingDate = async (timeStamp: admin.firestore.Timestamp) => {
+  const appointmentList = await appointmentCollection.where('timeStamp', '>=', timeStamp).get();
+  const result = appointmentList.docs.map((item) => {
+    const { timeStamp, ...appointmentData } = item.data();
+    return appointmentData;
+  });
+  return result;
+};
+
+const updateAppointment = async (appointmentId: string, data: AppointmentDbModel) => {
   const appointmentRef = appointmentCollection.doc(appointmentId);
 
   try {
@@ -75,4 +94,5 @@ export default {
   fetchAllAppointments,
   fetchAppointmentsByServiceName,
   fetchAppointmentsByName,
+  fetchAppointmentsByStartingDate,
 };

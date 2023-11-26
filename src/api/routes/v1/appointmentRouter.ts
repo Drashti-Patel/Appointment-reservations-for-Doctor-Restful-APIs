@@ -14,6 +14,12 @@ router.get('', appointmentController.getAllAppointments);
 router.get('/findByService', appointmentController.findAppointmentByServiceName);
 
 /**
+ * GET v1/appointment/fetchUpcomingAppointments
+ */
+router.get('/fetchUpcomingAppointments', appointmentController.fetchUpcomingAppointments);
+
+
+/**
  * POST v1/appointment
  */
 router.post('', appointmentController.addAppointment);
